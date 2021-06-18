@@ -78,31 +78,31 @@ namespace AppIBULACIT
         protected global::System.Web.UI.WebControls.TextBox txtFechaNacimiento;
 
         /// <summary>
-        /// Control btnFechaNac.
+        /// Control btnFechaNacimiento.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnFechaNac;
+        protected global::System.Web.UI.WebControls.Button btnFechaNacimiento;
 
         /// <summary>
-        /// Control cldFechaNacimiento.
+        /// Control clnFechaNacimiento.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Calendar cldFechaNacimiento;
+        protected global::System.Web.UI.WebControls.Calendar clnFechaNacimiento;
 
         /// <summary>
-        /// Control rfvFechaNac.
+        /// Control rfvCalendar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvFechaNac;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvCalendar;
 
         /// <summary>
         /// Control txtUsername.
@@ -166,6 +166,15 @@ namespace AppIBULACIT
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CompareValidator cvPassword;
+
+        /// <summary>
+        /// Control lblStatus.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblStatus;
 
         /// <summary>
         /// Control btnAceptar.
