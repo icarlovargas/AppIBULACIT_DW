@@ -64,7 +64,7 @@ namespace AppIBULACIT.Controllers
             return JsonConvert.DeserializeObject<Sesion>(await reponse.Content.ReadAsStringAsync());
         }
 
-        public async Task<string> Actualizar(string id, string token)
+        public async Task<string> Eliminar(string id, string token)
         {
             HttpClient httpClient = GetClient(token);
 
