@@ -10,7 +10,7 @@ using System.Web;
 
 namespace AppIBULACIT.Controllers
 {
-    public class ServicioController
+    public class ServicioManager
     {
         String UrlBase = "http://localhost:49220/api/Servicio/";
         HttpClient GetClient(string token)
@@ -33,13 +33,13 @@ namespace AppIBULACIT.Controllers
             return JsonConvert.DeserializeObject<Servicio>(reponse);
         }
 
-        public async Task<IEnumerable<Servicio>> ObtenerServicios(string token, string codigo)
+        public async Task<IEnumerable<Servicio>> ObtenerServicios(string token)
         {
             HttpClient httpClient = GetClient(token);
 
-            var reponse = await httpClient.GetStringAsync(string.Concat(UrlBase));
+            var response = await httpClient.GetStringAsync(UrlBase);
 
-            return JsonConvert.DeserializeObject<IEnumerable<Servicio>>(reponse);
+            return JsonConvert.DeserializeObject<IEnumerable<Servicio>>(response);
         }
 
 

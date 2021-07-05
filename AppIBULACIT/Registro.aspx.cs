@@ -18,13 +18,13 @@ namespace AppIBULACIT
 
         protected void btnFechaNacimiento_Click(object sender, EventArgs e)
         {
-            clnFechaNacimiento.Visible = true;
+            cldFechaNacimiento.Visible = true;
         }
 
-        protected void clnFechaNacimiento_SelectionChanged(object sender, EventArgs e)
+        protected void cldFechaNacimiento_SelectionChanged(object sender, EventArgs e)
         {
-            txtFechaNacimiento.Text = clnFechaNacimiento.SelectedDate.ToString("dd/MM/yyyy");
-            clnFechaNacimiento.Visible = false;
+            txtFechaNacimiento.Text = cldFechaNacimiento.SelectedDate.ToString("dd/MM/yyyy");
+            cldFechaNacimiento.Visible = false;
         }
 
         protected async void btnAceptar_Click(object sender, EventArgs e)

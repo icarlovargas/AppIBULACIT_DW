@@ -39,25 +39,51 @@
             </Scripts>
         </asp:ScriptManager>
 
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" runat="server" href="~/">Nombre de la aplicación</a>
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a runat="server" href="~/">Inicio</a></li>
-                        <li><a runat="server" href="~/About">Acerca de</a></li>
-                        <li><a runat="server" href="~/Contact">Contacto</a></li>
-                    </ul>
-                </div>
+      <nav class="navbar navbar-inverse">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="#">Internet Banking ULACIT</a>
             </div>
-        </div>
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="#">Menu principal</a></li>
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Mantenimiento 
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="Views/frmCuenta.aspx">Cuentas</a></li>
+                  <li><a href="Views/frmServicio.aspx">Servicios</a></li>
+                  <li><a href="Views/frmMoneda.aspx">Monedas</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Procesos
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Transferencias</a></li>
+                  <li><a href="#">Pagos</a></li>
+                </ul>
+              </li>
+                <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Reportes
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Transferencias</a></li>
+                  <li><a href="#">Pagos</a></li>
+                </ul>
+              </li>
+                <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Bitacoras
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Errores</a></li>
+                  <li><a href="#">Sesiones</a></li>
+                    <li><a href="#">Estadisticas</a></li>
+                </ul>
+              </li>
+              <li><a href="Login.aspx">Cerrar sesion</a></li>
+            </ul>
+          </div>
+        </nav>
         <div class="container body-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
