@@ -153,6 +153,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="CustomErrors\frmError.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -234,6 +235,13 @@
     <Compile Include="Controllers\SesionManager.cs" />
     <Compile Include="Controllers\TransferenciaManager.cs" />
     <Compile Include="Controllers\UsuarioManager.cs" />
+    <Compile Include="CustomErrors\frmError.aspx.cs">
+      <DependentUpon>frmError.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomErrors\frmError.aspx.designer.cs">
+      <DependentUpon>frmError.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

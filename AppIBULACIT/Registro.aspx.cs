@@ -61,8 +61,21 @@ namespace AppIBULACIT
                     }
 
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    ErrorManager errorManager = new ErrorManager();
+                    Error error = new Error()
+                    {
+                        CodigoUsuario = 0,
+                        Fecha = DateTime.Now,
+                        Vista = "registro.aspx",
+                        Accion = "btnAceptar_Click",
+                        Fuente = ex.Source,
+                        Numero = ex.HResult.ToString(),
+                        Descripcion = ex.Message
+                    };
+
+                    Error errorIngresado = await errorManager.Ingresar(error);
                     lblStatus.Text = "Hubo un error al registrar el usuario";
                     lblStatus.Visible = true;
                 }

@@ -10,7 +10,7 @@ using WebApiSegura.Models;
 
 namespace WebApiSegura.Controllers
 {
-    [Authorize]
+    [AllowAnonymous]
     [RoutePrefix("api/Error")]
     public class ErrorController : ApiController
     {

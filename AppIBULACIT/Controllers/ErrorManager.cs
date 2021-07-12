@@ -8,9 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
+
+//estas clases no tiene maneja tokens
 namespace AppIBULACIT.Controllers
 {
-    public class ErrorController
+    public class ErrorManager
     {
         String UrlBase = "http://localhost:49220/api/Error/";
         HttpClient GetClient(string token)
@@ -24,18 +26,18 @@ namespace AppIBULACIT.Controllers
             return httpClient;
         }
 
-        public async Task<Error> ObtenerError(string token, string codigo)
+        public async Task<Error> ObtenerError(string codigo)
         {
-            HttpClient httpClient = GetClient(token);
+            HttpClient httpClient = new HttpClient();
 
             var reponse = await httpClient.GetStringAsync(string.Concat(UrlBase, codigo));
 
             return JsonConvert.DeserializeObject<Error>(reponse);
         }
 
-        public async Task<IEnumerable<Error>> ObtenerErrores(string token, string codigo)
+        public async Task<IEnumerable<Error>> ObtenerErrores()
         {
-            HttpClient httpClient = GetClient(token);
+            HttpClient httpClient = new HttpClient();
 
             var reponse = await httpClient.GetStringAsync(string.Concat(UrlBase));
 
@@ -43,9 +45,9 @@ namespace AppIBULACIT.Controllers
         }
 
 
-        public async Task<Error> Ingresar(Error error, string token)
+        public async Task<Error> Ingresar(Error error)
         {
-            HttpClient httpClient = GetClient(token);
+            HttpClient httpClient = new HttpClient();
 
             var reponse = await httpClient.PostAsync(UrlBase,
                 new StringContent(JsonConvert.SerializeObject(error), Encoding.UTF8, "application/json"));
@@ -54,9 +56,9 @@ namespace AppIBULACIT.Controllers
         }
 
 
-        public async Task<Error> Actualizar(Error error, string token)
+        public async Task<Error> Actualizar(Error error)
         {
-            HttpClient httpClient = GetClient(token);
+            HttpClient httpClient = new HttpClient();
 
             var reponse = await httpClient.PutAsync(UrlBase,
                 new StringContent(JsonConvert.SerializeObject(error), Encoding.UTF8, "application/json"));
@@ -66,7 +68,7 @@ namespace AppIBULACIT.Controllers
 
         public async Task<string> Actualizar(string id, string token)
         {
-            HttpClient httpClient = GetClient(token);
+            HttpClient httpClient = new HttpClient();
 
             var reponse = await httpClient.DeleteAsync(string.Concat(UrlBase, id));
 

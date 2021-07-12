@@ -30,6 +30,19 @@ namespace AppIBULACIT.Views
             }
             catch (Exception ex)
             {
+                ErrorManager errorManager = new ErrorManager();
+                Error error = new Error()
+                {
+                    CodigoUsuario = Convert.ToInt32(Session["CodigoUsuario"].ToString()),
+                    Fecha = DateTime.Now,
+                    Vista = "frmServici.aspx",
+                    Accion = "InicializarControles",
+                    Fuente = ex.Source,
+                    Numero = ex.HResult.ToString(),
+                    Descripcion = ex.Message
+                };
+
+                Error errorIngresado = await errorManager.Ingresar(error);
                 lblStatus.Text = "Hubo un error al cargar la lista de servicios.";
                 lblStatus.Visible = true;
             }
@@ -80,56 +93,75 @@ namespace AppIBULACIT.Views
 
         protected async void btnAceptarMant_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtCodigoMant.Text))//Insertar
+            try
             {
-                Servicio servicio = new Servicio()
+                if (string.IsNullOrEmpty(txtCodigoMant.Text))//Insertar
                 {
-                    Descripcion = txtDescripcion.Text,
-                    Estado = ddlEstadoMant.SelectedValue
-                };
+                    Servicio servicio = new Servicio()
+                    {
+                        Descripcion = txtDescripcion.Text,
+                        Estado = ddlEstadoMant.SelectedValue
+                    };
 
-                Servicio servicioIngresado = await servicioManager.Ingresar(servicio, Session["Token"].ToString());
+                    Servicio servicioIngresado = await servicioManager.Ingresar(servicio, Session["Token"].ToString());
 
-                if (!string.IsNullOrEmpty(servicioIngresado.Descripcion))
-                {
-                    lblResultado.Text = "Servicio ingresado con exito";
-                    lblResultado.Visible = true;
-                    lblResultado.ForeColor = Color.Green;
-                    btnAceptarMant.Visible = false;
-                    InicializarControles();
+                    if (!string.IsNullOrEmpty(servicioIngresado.Descripcion))
+                    {
+                        lblResultado.Text = "Servicio ingresado con exito";
+                        lblResultado.Visible = true;
+                        lblResultado.ForeColor = Color.Green;
+                        btnAceptarMant.Visible = false;
+                        InicializarControles();
+                    }
+                    else
+                    {
+                        lblResultado.Text = "Hubo un error al efectuar la operacion.";
+                        lblResultado.Visible = true;
+                        lblResultado.ForeColor = Color.Maroon;
+                    }
                 }
-                else
+                else //Modificar
                 {
-                    lblResultado.Text = "Hubo un error al efectuar la operacion.";
-                    lblResultado.Visible = true;
-                    lblResultado.ForeColor = Color.Maroon;
+                    Servicio servicio = new Servicio()
+                    {
+                        Codigo = Convert.ToInt32(txtCodigoMant.Text),
+                        Descripcion = txtDescripcion.Text,
+                        Estado = ddlEstadoMant.SelectedValue
+                    };
+
+                    Servicio servicioModificado = await servicioManager.Actualizar(servicio, Session["Token"].ToString());
+
+                    if (!string.IsNullOrEmpty(servicioModificado.Descripcion))
+                    {
+                        lblResultado.Text = "Servicio actualizado con exito";
+                        lblResultado.Visible = true;
+                        lblResultado.ForeColor = Color.Green;
+                        btnAceptarMant.Visible = false;
+                        InicializarControles();
+                    }
+                    else
+                    {
+                        lblResultado.Text = "Hubo un error al efectuar la operacion.";
+                        lblResultado.Visible = true;
+                        lblResultado.ForeColor = Color.Maroon;
+                    }
                 }
             }
-            else //Modificar
+            catch (Exception ex)
             {
-                Servicio servicio = new Servicio()
+                ErrorManager errorManager = new ErrorManager();
+                Error error = new Error()
                 {
-                    Codigo = Convert.ToInt32(txtCodigoMant.Text),
-                    Descripcion = txtDescripcion.Text,
-                    Estado = ddlEstadoMant.SelectedValue
+                    CodigoUsuario = Convert.ToInt32(Session["CodigoUsuario"].ToString()),
+                    Fecha = DateTime.Now,
+                    Vista = "frmServici.aspx",
+                    Accion = "btnAceptarMant_Click",
+                    Fuente = ex.Source,
+                    Numero = ex.HResult.ToString(),
+                    Descripcion = ex.Message
                 };
 
-                Servicio servicioModificado = await servicioManager.Actualizar(servicio, Session["Token"].ToString());
-
-                if (!string.IsNullOrEmpty(servicioModificado.Descripcion))
-                {
-                    lblResultado.Text = "Servicio actualizado con exito";
-                    lblResultado.Visible = true;
-                    lblResultado.ForeColor = Color.Green;
-                    btnAceptarMant.Visible = false;
-                    InicializarControles();
-                }
-                else
-                {
-                    lblResultado.Text = "Hubo un error al efectuar la operacion.";
-                    lblResultado.Visible = true;
-                    lblResultado.ForeColor = Color.Maroon;
-                }
+                Error errorIngresado = await errorManager.Ingresar(error);
             }
         }
 
@@ -140,15 +172,35 @@ namespace AppIBULACIT.Views
 
         protected async void btnAceptarModal_Click(object sender, EventArgs e)
         {
-            string resultado = string.Empty;
-            resultado = await servicioManager.Eliminar(lblCodigoEliminar.Text, Session["Token"].ToString());
-            if (!string.IsNullOrEmpty(resultado))
+            try
             {
-                lblCodigoEliminar.Text = string.Empty;
-                ltrModalMensaje.Text = "Servicio eliminado";
-                btnAceptarModal.Visible = false;
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { openModal(); });", true);
-                InicializarControles();
+                string resultado = string.Empty;
+                resultado = await servicioManager.Eliminar(lblCodigoEliminar.Text, Session["Token"].ToString());
+                if (!string.IsNullOrEmpty(resultado))
+                {
+                    lblCodigoEliminar.Text = string.Empty;
+                    ltrModalMensaje.Text = "Servicio eliminado";
+                    btnAceptarModal.Visible = false;
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { openModal(); });", true);
+                    InicializarControles();
+                }
+            }
+            catch (Exception ex )
+            {
+                ErrorManager errorManager = new ErrorManager();
+                Error error = new Error()
+                {
+                    CodigoUsuario = Convert.ToInt32(Session["CodigoUsuario"].ToString()),
+                    Fecha = DateTime.Now,
+                    Vista = "frmServici.aspx",
+                    Accion = "btnAceptarModal_Click",
+                    Fuente = ex.Source,
+                    Numero = ex.HResult.ToString(),
+                    Descripcion = ex.Message
+                };
+
+                Error errorIngresado = await errorManager.Ingresar(error);
+
             }
         }
 

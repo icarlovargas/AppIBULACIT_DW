@@ -8,9 +8,12 @@ using System.Net.Http;
 using System.Web.Http;
 using WebApiSegura.Models;
 
+
+//esta clase no necesita token
 namespace WebApiSegura.Controllers
 {
-    [Authorize]
+
+    [AllowAnonymous]
     [RoutePrefix("api/Estadistica")]
     public class EstadisticaController : ApiController
     {

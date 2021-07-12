@@ -8,9 +8,10 @@ using System.Net.Http;
 using System.Web.Http;
 using WebApiSegura.Models;
 
+//esta clase no cuenta con token
 namespace WebApiSegura.Controllers
 {
-    [Authorize]
+    [AllowAnonymous]
     [RoutePrefix("api/Sesion")]
     public class SesionController : ApiController
     {

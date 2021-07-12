@@ -19,5 +19,16 @@ namespace AppIBULACIT
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+        void Session_Start(object sender, EventArgs e)
+        {
+            Session["LastError"] = "";
+        }
+
+        private void Application_Error(Object sender, EventArgs e)
+        {
+            Exception error = Server.GetLastError();
+            Session.Add("lastError", error);
+        }
     }
 }
