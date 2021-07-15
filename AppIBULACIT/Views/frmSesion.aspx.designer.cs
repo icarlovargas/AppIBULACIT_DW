@@ -7,29 +7,29 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace AppIBULACIT
+namespace AppIBULACIT.Views
 {
 
 
-    public partial class SiteMaster
+    public partial class frmSesion
     {
 
         /// <summary>
-        /// Control linkCerrarSesion.
+        /// Control gvSesiones.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton linkCerrarSesion;
+        protected global::System.Web.UI.WebControls.GridView gvSesiones;
 
         /// <summary>
-        /// Control MainContent.
+        /// Control lblStatus.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder MainContent;
+        protected global::System.Web.UI.WebControls.Label lblStatus;
     }
 }

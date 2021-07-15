@@ -43,9 +43,21 @@ namespace AppIBULACIT
                         Session["Estado"] = usuario.Estado;
                         Session["Token"] = usuario.Token;
                         Session["InicioSesion"] = jwtSecurityToken.ValidFrom.ToString("dd/MM/yyyy HH:mm:ss");
-                        Session["FinSesion"] = jwtSecurityToken.ValidFrom.ToString("dd/MM/yyyy HH:mm:ss");
+                        Session["FinSesion"] = jwtSecurityToken.ValidTo.ToString("dd/MM/yyyy HH:mm:ss");
 
                         FormsAuthentication.RedirectFromLoginPage(usuario.Username, false);
+
+                        SesionController sesionManager = new SesionController();
+                        Sesion sesion = new Sesion()
+                        {
+                            CodigoUsuario = usuario.Codigo,
+                            FechaInicio = Convert.ToDateTime(jwtSecurityToken.ValidFrom.ToString("dd/MM/yyyy HH:mm:ss")),
+                            FechaExpiracion = Convert.ToDateTime(jwtSecurityToken.ValidTo.ToString("dd/MM/yyyy HH:mm:ss")),
+                            Estado = "A"
+                        };
+
+                        Sesion sesionIngresada = await sesionManager.Ingresar(sesion, usuario.Token);
+
                     }
                     else
                     {

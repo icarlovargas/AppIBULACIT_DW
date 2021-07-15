@@ -35,13 +35,13 @@ namespace AppIBULACIT.Controllers
             return JsonConvert.DeserializeObject<Error>(reponse);
         }
 
-        public async Task<IEnumerable<Error>> ObtenerErrores()
+        public async Task<IEnumerable<Error>> ObtenerErrores(string token)
         {
-            HttpClient httpClient = new HttpClient();
+            HttpClient httpClient = GetClient(token);
 
-            var reponse = await httpClient.GetStringAsync(string.Concat(UrlBase));
+            var response = await httpClient.GetStringAsync(UrlBase);
 
-            return JsonConvert.DeserializeObject<IEnumerable<Error>>(reponse);
+            return JsonConvert.DeserializeObject<IEnumerable<Error>>(response);
         }
 
 

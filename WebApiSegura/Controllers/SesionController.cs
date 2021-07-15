@@ -11,7 +11,7 @@ using WebApiSegura.Models;
 //esta clase no cuenta con token
 namespace WebApiSegura.Controllers
 {
-    [AllowAnonymous]
+    [Authorize]
     [RoutePrefix("api/Sesion")]
     public class SesionController : ApiController
     {
@@ -111,12 +111,12 @@ namespace WebApiSegura.Controllers
             {
                 using (SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["INTERNET_BANKING"].ConnectionString))
                 {
-                    SqlCommand sqlCommand = new SqlCommand(@"INSERT INTO Sesion (CodigoUsuario,FechaInicio,FechaExpiracion,Estado) 
+                    SqlCommand sqlCommand = new SqlCommand(@"INSERT INTO Sesion (Codigo,CodigoUsuario,FechaInicio,FechaExpiracion,Estado) 
                                                                 VALUES 
-                                                                (@CodigoUsuario,@FechaInicio,@FechaExpiracion,@Estado)", sqlConnection);
+                                                                (@Codigo,@CodigoUsuario,@FechaInicio,@FechaExpiracion,@Estado)", sqlConnection);
 
 
-                    //sqlCommand.Parameters.AddWithValue("@Codigo", sesion.Codigo);
+                    sqlCommand.Parameters.AddWithValue("@Codigo", sesion.Codigo);
                     sqlCommand.Parameters.AddWithValue("@CodigoUsuario", sesion.CodigoUsuario);
                     sqlCommand.Parameters.AddWithValue("@FechaInicio", sesion.FechaInicio);
                     sqlCommand.Parameters.AddWithValue("@FechaExpiracion", sesion.FechaExpiracion);

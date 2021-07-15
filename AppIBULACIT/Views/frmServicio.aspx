@@ -33,6 +33,7 @@
     <h1>
         <asp:Label Text="Mantenimiento de servicios" runat="server"></asp:Label></h1>
     <input id="myInput" placeholder="Buscar" class="form-control" type="text" />
+    <br />
     <asp:GridView ID="gvServicios" OnRowCommand="gvServicios_RowCommand" runat="server" AutoGenerateColumns="False"
         CssClass="table table-sm" HeaderStyle-CssClass="thead-dark" HeaderStyle-BackColor="#243054"
         HeaderStyle-ForeColor="White" AlternatingRowStyle-BackColor="LightBlue" Width="100%">

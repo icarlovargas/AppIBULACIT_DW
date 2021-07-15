@@ -33,7 +33,7 @@ namespace AppIBULACIT.Controllers
             return JsonConvert.DeserializeObject<Moneda>(reponse);
         }
 
-        public async Task<IEnumerable<Moneda>> ObtenerMonedas(string token, string codigo)
+        public async Task<IEnumerable<Moneda>> ObtenerMonedas(string token)
         {
             HttpClient httpClient = GetClient(token);
 
@@ -64,7 +64,7 @@ namespace AppIBULACIT.Controllers
             return JsonConvert.DeserializeObject<Moneda>(await reponse.Content.ReadAsStringAsync());
         }
 
-        public async Task<string> Actualizar(string id, string token)
+        public async Task<string> Eliminar(string id, string token)
         {
             HttpClient httpClient = GetClient(token);
 

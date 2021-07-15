@@ -89,6 +89,7 @@ namespace AppIBULACIT.Views
                 default:
                     break;
             }
+
         }
 
         protected async void btnAceptarMant_Click(object sender, EventArgs e)
@@ -112,6 +113,9 @@ namespace AppIBULACIT.Views
                         lblResultado.ForeColor = Color.Green;
                         btnAceptarMant.Visible = false;
                         InicializarControles();
+                        //Correo correo = new Correo();
+
+                        //correo.Enviar("Nuevo servicio incluido", servicio.Descripcion, "vargascarlomario@gmail.com");
                     }
                     else
                     {

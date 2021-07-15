@@ -33,7 +33,7 @@ namespace AppIBULACIT.Controllers
             return JsonConvert.DeserializeObject<Sesion>(reponse);
         }
 
-        public async Task<IEnumerable<Sesion>> ObtenerSesiones(string token, string codigo)
+        public async Task<IEnumerable<Sesion>> ObtenerSesiones(string token)
         {
             HttpClient httpClient = GetClient(token);
 
