@@ -33,7 +33,7 @@ namespace AppIBULACIT.Controllers
             return JsonConvert.DeserializeObject<Pago>(reponse);
         }
 
-        public async Task<IEnumerable<Pago>> ObtenerPagos(string token, string codigo)
+        public async Task<IEnumerable<Pago>> ObtenerPagos(string token)
         {
             HttpClient httpClient = GetClient(token);
 

@@ -84,7 +84,7 @@ namespace WebApiSegura.Controllers
                         transferencia.FechaHora = sqlDataReader.GetDateTime(3);
                         transferencia.Descripcion = sqlDataReader.GetString(4);
                         transferencia.Estado = sqlDataReader.GetString(5);
-                        transferencia.Monto = sqlDataReader.GetInt32(6);
+                        transferencia.Monto = sqlDataReader.GetDecimal(6);
 
                         transferencias.Add(transferencia);
 

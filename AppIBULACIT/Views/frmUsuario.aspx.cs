@@ -21,7 +21,7 @@ namespace AppIBULACIT.Views
         UsuarioManager2Controller usuarioManager2 = new UsuarioManager2Controller();
 
 
-        protected void Page_Load(object sender, EventArgs e) 
+        protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack) //agregar metodo de postback
             {
@@ -30,7 +30,7 @@ namespace AppIBULACIT.Views
                 else
                     InicializarControles();
             }
-            
+
         }
         //paso 3 crear metodo
         private async void InicializarControles()
@@ -43,42 +43,76 @@ namespace AppIBULACIT.Views
                 gvUsuario.DataBind();
             }
 
-            catch (Exception)
+            catch (Exception ex)
             {
+                ErrorManager errorManager = new ErrorManager();
+                Error error = new Error()
+                {
+                    CodigoUsuario = Convert.ToInt32(Session["CodigoUsuario"].ToString()),
+                    Fecha = DateTime.Now,
+                    Vista = "frmUsuario.aspx",
+                    Accion = "InicializarControles",
+                    Fuente = ex.Source,
+                    Numero = ex.HResult.ToString(),
+                    Descripcion = ex.Message
+                };
+
+                Error errorIngresado = await errorManager.Ingresar(error);
                 lblStatus.Text = "Hubo un error al cargar la lista de servicios.";
                 lblStatus.Visible = true;
             }
         }
 
-        protected void gvUsuario_RowCommand(object sender, GridViewCommandEventArgs e)
+        protected async void gvUsuario_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            int index = Convert.ToInt32(e.CommandArgument);
-            GridViewRow row = gvUsuario.Rows[index];
-
-            switch (e.CommandName)
+            try
             {
-                case "Modificar":
-                    ltrTituloMantenimiento.Text = "Modificar Usuario";
-                    btnAceptarMant.ControlStyle.CssClass = "btn btn-primary";
-                    txtCodigoMant.Text = row.Cells[0].Text.Trim();  
-                    txtIdentificacion.Text = row.Cells[1].Text.Trim();
-                    txtNombre.Text = row.Cells[2].Text.Trim();
-                    txtUsername.Text = row.Cells[3].Text.Trim();
-                    txtPassword.Text = row.Cells[4].Text.Trim();
-                    txtemail.Text = row.Cells[5].Text.Trim();
-                    txtFechaNacimiento.Text = row.Cells[6].Text.Trim();
-                    btnAceptarMant.Visible = true;
-                    ScriptManager.RegisterStartupScript(this,
-                this.GetType(), "LaunchServerSide", "$(function() {openModalMantenimiento(); } );", true);
-                    break;
-                case "Eliminar":
-                    lblCodigoEliminar.Text = row.Cells[0].Text;
-                    ltrModalMensaje.Text = "Esta seguro que desea eliminar el Usuario #" + lblCodigoEliminar.Text + "?";
-                    ScriptManager.RegisterStartupScript(this,
-               this.GetType(), "LaunchServerSide", "$(function() {openModal(); } );", true);
-                    break;
-                default:
-                    break;
+                int index = Convert.ToInt32(e.CommandArgument);
+                GridViewRow row = gvUsuario.Rows[index];
+
+                switch (e.CommandName)
+                {
+                    case "Modificar":
+                        ltrTituloMantenimiento.Text = "Modificar Usuario";
+                        btnAceptarMant.ControlStyle.CssClass = "btn btn-primary";
+                        txtCodigoMant.Text = row.Cells[0].Text.Trim();
+                        txtIdentificacion.Text = row.Cells[1].Text.Trim();
+                        txtNombre.Text = row.Cells[2].Text.Trim();
+                        txtUsername.Text = row.Cells[3].Text.Trim();
+                        txtPassword.Text = row.Cells[4].Text.Trim();
+                        txtemail.Text = row.Cells[5].Text.Trim();
+                        txtFechaNacimiento.Text = row.Cells[6].Text.Trim();
+                        btnAceptarMant.Visible = true;
+                        ScriptManager.RegisterStartupScript(this,
+                    this.GetType(), "LaunchServerSide", "$(function() {openModalMantenimiento(); } );", true);
+                        break;
+                    case "Eliminar":
+                        lblCodigoEliminar.Text = row.Cells[0].Text;
+                        ltrModalMensaje.Text = "Esta seguro que desea eliminar el Usuario #" + lblCodigoEliminar.Text + "?";
+                        ScriptManager.RegisterStartupScript(this,
+                   this.GetType(), "LaunchServerSide", "$(function() {openModal(); } );", true);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorManager errorManager = new ErrorManager();
+                Error error = new Error()
+                {
+                    CodigoUsuario = Convert.ToInt32(Session["CodigoUsuario"].ToString()),
+                    Fecha = DateTime.Now,
+                    Vista = "frmUsuario.aspx",
+                    Accion = "InicializarControles",
+                    Fuente = ex.Source,
+                    Numero = ex.HResult.ToString(),
+                    Descripcion = ex.Message
+                };
+
+                Error errorIngresado = await errorManager.Ingresar(error);
+                lblStatus.Text = "Hay un error con el funcionamineto del gridView";
+                lblStatus.Visible = true;
             }
         }
 
@@ -86,20 +120,22 @@ namespace AppIBULACIT.Views
         {
             //Modificar
 
-            Usuario usuario = new Usuario() ///cambiamos el tipo de dato
+            try
             {
-                Codigo = Convert.ToInt32(txtCodigoMant.Text),
-                Identificacion = txtIdentificacion.Text,
-                Nombre = txtNombre.Text,
-                Email = txtemail.Text,
-                FechaNacimiento = Convert.ToDateTime(txtFechaNacimiento.Text),
-                //FechaNacimiento = DateTime.Now, ///---por corregir
-                Username = txtUsername.Text,
-                Password = txtPassword.Text,
-                Estado = ddlEstadoMant.SelectedValue
+                Usuario usuario = new Usuario() ///cambiamos el tipo de dato
+                {
+                    Codigo = Convert.ToInt32(txtCodigoMant.Text),
+                    Identificacion = txtIdentificacion.Text,
+                    Nombre = txtNombre.Text,
+                    Email = txtemail.Text,
+                    FechaNacimiento = Convert.ToDateTime(txtFechaNacimiento.Text),
+                    //FechaNacimiento = DateTime.Now, ///---por corregir
+                    Username = txtUsername.Text,
+                    Password = txtPassword.Text,
+                    Estado = ddlEstadoMant.SelectedValue
                 };
 
-                Usuario usuarioModificado= await usuarioManager2.Actualizar(usuario, Session["Token"].ToString());
+                Usuario usuarioModificado = await usuarioManager2.Actualizar(usuario, Session["Token"].ToString());
 
                 if (!string.IsNullOrEmpty(usuarioModificado.Nombre))
                 {
@@ -115,46 +151,212 @@ namespace AppIBULACIT.Views
                     lblResultado.Visible = true;
                     lblResultado.ForeColor = Color.Maroon;
                 }
-            
+            }
+            catch (Exception ex)
+            {
+                ErrorManager errorManager = new ErrorManager();
+                Error error = new Error()
+                {
+                    CodigoUsuario = Convert.ToInt32(Session["CodigoUsuario"].ToString()),
+                    Fecha = DateTime.Now,
+                    Vista = "frmUsuario.aspx",
+                    Accion = "btnAceptarMant_Click",
+                    Fuente = ex.Source,
+                    Numero = ex.HResult.ToString(),
+                    Descripcion = ex.Message
+                };
+
+                Error errorIngresado = await errorManager.Ingresar(error);
+            }
+
+            EstadisticaController estadisticaManager = new EstadisticaController();
+            Estadistica estadistica = new Estadistica()
+            {
+                CodigoUsuario = Convert.ToInt32(Session["CodigoUsuario"].ToString()),
+                FechaHora = DateTime.Now,
+                Navegador = HttpContext.Current.Request.Browser.Browser,
+                PlataformaDispositivo = Request.Browser.Platform,
+                FabricanteDispositivo = Request.Browser.MobileDeviceManufacturer,
+                Vista = "frmUsuario.aspx.cs",
+                Accion = "btnAceptarMant_Click"
+            };
+
+            Estadistica estadisticaIngresada = await estadisticaManager.Ingresar(estadistica);
+
         }
 
-        protected void btnCancelarMant_Click(object sender, EventArgs e)
+        protected async void btnCancelarMant_Click(object sender, EventArgs e)
         {
             ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { CloseMantenimiento(); });", true);
+
+            EstadisticaController estadisticaManager = new EstadisticaController();
+            Estadistica estadistica = new Estadistica()
+            {
+                CodigoUsuario = Convert.ToInt32(Session["CodigoUsuario"].ToString()),
+                FechaHora = DateTime.Now,
+                Navegador = HttpContext.Current.Request.Browser.Browser,
+                PlataformaDispositivo = Request.Browser.Platform,
+                FabricanteDispositivo = Request.Browser.MobileDeviceManufacturer,
+                Vista = "frmUsuario.aspx.cs",
+                Accion = "btnCancelarMant_Click"
+            };
+
+            Estadistica estadisticaIngresada = await estadisticaManager.Ingresar(estadistica);
         }
 
         protected async void btnAceptarModal_Click(object sender, EventArgs e)
         {
-            string resultado = string.Empty;
-            resultado = await usuarioManager2.Eliminar(lblCodigoEliminar.Text, Session["Token"].ToString());
-            if (!string.IsNullOrEmpty(resultado))
+            try
             {
-                lblCodigoEliminar.Text = string.Empty;
-                ltrModalMensaje.Text = "Usuario Eliminado";
-                btnAceptarModal.Visible = false;
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { openModal(); });", true);
-                InicializarControles();
+                string resultado = string.Empty;
+                resultado = await usuarioManager2.Eliminar(lblCodigoEliminar.Text, Session["Token"].ToString());
+                if (!string.IsNullOrEmpty(resultado))
+                {
+                    lblCodigoEliminar.Text = string.Empty;
+                    ltrModalMensaje.Text = "Usuario Eliminado";
+                    btnAceptarModal.Visible = false;
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { openModal(); });", true);
+                    InicializarControles();
+                }
             }
+            catch (Exception ex)
+            {
+
+                ErrorManager errorManager = new ErrorManager();
+                Error error = new Error()
+                {
+                    CodigoUsuario = Convert.ToInt32(Session["CodigoUsuario"].ToString()),
+                    Fecha = DateTime.Now,
+                    Vista = "frmUsuario.aspx",
+                    Accion = "btnAceptarModal_Click",
+                    Fuente = ex.Source,
+                    Numero = ex.HResult.ToString(),
+                    Descripcion = ex.Message
+                };
+
+                Error errorIngresado = await errorManager.Ingresar(error);
+                lblStatus.Text = "Hay un error al eliminar el usuario.";
+                lblStatus.Visible = true;
+            }
+
+            EstadisticaController estadisticaManager = new EstadisticaController();
+            Estadistica estadistica = new Estadistica()
+            {
+                CodigoUsuario = Convert.ToInt32(Session["CodigoUsuario"].ToString()),
+                FechaHora = DateTime.Now,
+                Navegador = HttpContext.Current.Request.Browser.Browser,
+                PlataformaDispositivo = Request.Browser.Platform,
+                FabricanteDispositivo = Request.Browser.MobileDeviceManufacturer,
+                Vista = "frmUsuario.aspx.cs",
+                Accion = "btnAceptarModal_Click"
+            };
+
+            Estadistica estadisticaIngresada = await estadisticaManager.Ingresar(estadistica);
         }
 
-        protected void btnCancelarModal_Click(object sender, EventArgs e)
+        protected async void btnCancelarModal_Click(object sender, EventArgs e)
         {
             ScriptManager.RegisterStartupScript(this, this.GetType(), "LaunchServerSide", "$(function() { CloseModal(); });", true);
+
+            EstadisticaController estadisticaManager = new EstadisticaController();
+            Estadistica estadistica = new Estadistica()
+            {
+                CodigoUsuario = Convert.ToInt32(Session["CodigoUsuario"].ToString()),
+                FechaHora = DateTime.Now,
+                Navegador = HttpContext.Current.Request.Browser.Browser,
+                PlataformaDispositivo = Request.Browser.Platform,
+                FabricanteDispositivo = Request.Browser.MobileDeviceManufacturer,
+                Vista = "frmUsuario.aspx.cs",
+                Accion = "btnCancelarModal_Click"
+            };
+
+            Estadistica estadisticaIngresada = await estadisticaManager.Ingresar(estadistica);
         }
 
-        protected void btnFechaNac_Click(object sender, EventArgs e)
+        protected async void btnFechaNac_Click(object sender, EventArgs e)
         {
-            cldFechaNacimiento.Visible = true;
-            ScriptManager.RegisterStartupScript(this,
-                this.GetType(), "LaunchServerSide", "$(function() {openModalMantenimiento(); } );", true);
+            try
+            {
+                cldFechaNacimiento.Visible = true;
+                ScriptManager.RegisterStartupScript(this,
+                    this.GetType(), "LaunchServerSide", "$(function() {openModalMantenimiento(); } );", true);
+            }
+            catch (Exception ex)
+            {
+                ErrorManager errorManager = new ErrorManager();
+                Error error = new Error()
+                {
+                    CodigoUsuario = Convert.ToInt32(Session["CodigoUsuario"].ToString()),
+                    Fecha = DateTime.Now,
+                    Vista = "frmUsuario.aspx",
+                    Accion = "btnFechaNac_Click",
+                    Fuente = ex.Source,
+                    Numero = ex.HResult.ToString(),
+                    Descripcion = ex.Message
+                };
+
+                Error errorIngresado = await errorManager.Ingresar(error);
+                lblStatus.Text = "Hay un error con el boton de fecha.";
+                lblStatus.Visible = true;
+            }
+
+            EstadisticaController estadisticaManager = new EstadisticaController();
+            Estadistica estadistica = new Estadistica()
+            {
+                CodigoUsuario = Convert.ToInt32(Session["CodigoUsuario"].ToString()),
+                FechaHora = DateTime.Now,
+                Navegador = HttpContext.Current.Request.Browser.Browser,
+                PlataformaDispositivo = Request.Browser.Platform,
+                FabricanteDispositivo = Request.Browser.MobileDeviceManufacturer,
+                Vista = "frmTransferencia.aspx.cs",
+                Accion = "btnFechaNac_Click"
+            };
+
+            Estadistica estadisticaIngresada = await estadisticaManager.Ingresar(estadistica);
         }
 
-        protected void cldFechaNacimiento_SelectionChanged(object sender, EventArgs e)
+        protected async void cldFechaNacimiento_SelectionChanged(object sender, EventArgs e)
         {
-            txtFechaNacimiento.Text = cldFechaNacimiento.SelectedDate.ToString("dd/MM/yyyy");
-            cldFechaNacimiento.Visible = false;
-            ScriptManager.RegisterStartupScript(this,
-                this.GetType(), "LaunchServerSide", "$(function() {openModalMantenimiento(); } );", true);
+            try
+            {
+                if(DateTime.Now >= cldFechaNacimiento.SelectedDate)
+                {
+                    txtFechaNacimiento.Text = cldFechaNacimiento.SelectedDate.ToString("dd/MM/yyyy");
+                    cldFechaNacimiento.Visible = false;
+                    ScriptManager.RegisterStartupScript(this,
+                        this.GetType(), "LaunchServerSide", "$(function() {openModalMantenimiento(); } );", true);
+                }
+                else
+                {
+                    lblResultado.Text = "Fecha invalida";
+                    lblResultado.Visible = true;
+                    lblResultado.ForeColor = Color.Maroon;
+                    ScriptManager.RegisterStartupScript(this,
+                    this.GetType(), "LaunchServerSide", "$(function() {openModalMantenimiento(); } );", true);
+                }
+
+
+
+                
+            }
+            catch (Exception ex)
+            {
+                ErrorManager errorManager = new ErrorManager();
+                Error error = new Error()
+                {
+                    CodigoUsuario = Convert.ToInt32(Session["CodigoUsuario"].ToString()),
+                    Fecha = DateTime.Now,
+                    Vista = "frmUsuario.aspx",
+                    Accion = "cldFechaNacimiento_SelectionChanged",
+                    Fuente = ex.Source,
+                    Numero = ex.HResult.ToString(),
+                    Descripcion = ex.Message
+                };
+
+                Error errorIngresado = await errorManager.Ingresar(error);
+                lblStatus.Text = "Hay un problema con el calendario.";
+                lblStatus.Visible = true;
+            }
         }
     }
 }

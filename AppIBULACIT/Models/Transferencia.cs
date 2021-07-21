@@ -16,6 +16,6 @@ namespace AppIBULACIT.Models
         public string Estado { get; set; }
         public decimal Monto { get; set; }
 
-        public virtual Cuenta Cuenta { get; set; }
+        
     }
 }

@@ -61,8 +61,8 @@
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Procesos
                 <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="#">Transferencias</a></li>
-                  <li><a href="#">Pagos</a></li>
+                  <li><a href="/Views/frmTransferencia.aspx">Transferencias</a></li>
+                  <li><a href="/Views/frmPago.aspx">Pagos</a></li>
                 </ul>
               </li>
                 <li class="dropdown">
@@ -78,7 +78,7 @@
                 <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li><a href="/Views/frmError.aspx">Errores</a></li>
-                  <li><a href="#">Estadisticas</a></li>
+                  <li><a href="/Views/frmEstadistica.aspx">Estadisticas</a></li>
                     <li><a href="/Views/frmSesion.aspx">Sesiones</a></li>
                 </ul>
               </li>

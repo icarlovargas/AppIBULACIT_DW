@@ -11,22 +11,23 @@ using AppIBULACIT.Models;
 
 namespace AppIBULACIT.Views
 {
-    public partial class frmSesion : System.Web.UI.Page
+    public partial class frmEstadistica : System.Web.UI.Page
     {
-        IEnumerable<Sesion> sesiones = new ObservableCollection<Sesion>();
-        SesionController sesionManager = new SesionController();
 
+        IEnumerable<Estadistica> estadisticas = new ObservableCollection<Estadistica>();
+        EstadisticaController estadisticaManager = new EstadisticaController();
         protected void Page_Load(object sender, EventArgs e)
         {
             InicializarControles();
         }
 
+
         private async void InicializarControles()
         {
             try
             {
-                sesiones = await sesionManager.ObtenerSesiones(Session["Token"].ToString());
-                gvSesiones.DataSource = sesiones.ToList();
+                estadisticas = await estadisticaManager.ObtenerEstadisticas();
+                gvSesiones.DataSource = estadisticas.ToList();
                 gvSesiones.DataBind();
             }
             catch (Exception ex)
@@ -36,7 +37,7 @@ namespace AppIBULACIT.Views
                 {
                     CodigoUsuario = Convert.ToInt32(Session["CodigoUsuario"].ToString()),
                     Fecha = DateTime.Now,
-                    Vista = "SesionControle.aspx",
+                    Vista = "frmEstadistica.aspx",
                     Accion = "InicializarControles",
                     Fuente = ex.Source,
                     Numero = ex.HResult.ToString(),

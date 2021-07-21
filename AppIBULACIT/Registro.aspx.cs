@@ -16,15 +16,70 @@ namespace AppIBULACIT
 
         }
 
-        protected void btnFechaNacimiento_Click(object sender, EventArgs e)
+        protected async void btnFechaNacimiento_Click(object sender, EventArgs e)
         {
-            cldFechaNacimiento.Visible = true;
+            try
+            {
+                cldFechaNacimiento.Visible = true;
+                EstadisticaController estadisticaManager = new EstadisticaController();
+                Estadistica estadistica = new Estadistica()
+                {
+                    CodigoUsuario = 0,
+                    FechaHora = DateTime.Now,
+                    Navegador = HttpContext.Current.Request.Browser.Browser,
+                    PlataformaDispositivo = Request.Browser.Platform,
+                    FabricanteDispositivo = Request.Browser.MobileDeviceManufacturer,
+                    Vista = "Registro.aspx.cs",
+                    Accion = "btnFechaNacimiento_Click"
+                };
+
+                Estadistica estadisticaIngresada = await estadisticaManager.Ingresar(estadistica);
+            }
+            catch (Exception ex)
+            {
+                ErrorManager errorManager = new ErrorManager();
+                Error error = new Error()
+                {
+                    CodigoUsuario = Convert.ToInt32(Session["CodigoUsuario"].ToString()),
+                    Fecha = DateTime.Now,
+                    Vista = "frmRegistro.aspx",
+                    Accion = "btnFechaNacimiento_Click",
+                    Fuente = ex.Source,
+                    Numero = ex.HResult.ToString(),
+                    Descripcion = ex.Message
+                };
+
+                Error errorIngresado = await errorManager.Ingresar(error);
+                lblStatus.Text = "Hay un error con el Boton de Fecha de Nacimiento.";
+                lblStatus.Visible = true;
+            }
         }
 
-        protected void cldFechaNacimiento_SelectionChanged(object sender, EventArgs e)
+        protected async void cldFechaNacimiento_SelectionChanged(object sender, EventArgs e)
         {
-            txtFechaNacimiento.Text = cldFechaNacimiento.SelectedDate.ToString("dd/MM/yyyy");
-            cldFechaNacimiento.Visible = false;
+            try
+            {
+                txtFechaNacimiento.Text = cldFechaNacimiento.SelectedDate.ToString("dd/MM/yyyy");
+                cldFechaNacimiento.Visible = false;
+            }
+            catch (Exception ex)
+            {
+                ErrorManager errorManager = new ErrorManager();
+                Error error = new Error()
+                {
+                    CodigoUsuario = Convert.ToInt32(Session["CodigoUsuario"].ToString()),
+                    Fecha = DateTime.Now,
+                    Vista = "frmRegistro.aspx",
+                    Accion = "cldFechaNacimiento_SelectionChanged",
+                    Fuente = ex.Source,
+                    Numero = ex.HResult.ToString(),
+                    Descripcion = ex.Message
+                };
+
+                Error errorIngresado = await errorManager.Ingresar(error);
+                lblStatus.Text = "Hay un error con Calendar";
+                lblStatus.Visible = true;
+            }
         }
 
         protected async void btnAceptar_Click(object sender, EventArgs e)
@@ -59,6 +114,20 @@ namespace AppIBULACIT
                         lblStatus.Text = "Hubo un error al registrar el usuario";
                         lblStatus.Visible = true;
                     }
+
+                    EstadisticaController estadisticaManager = new EstadisticaController();
+                    Estadistica estadistica = new Estadistica()
+                    {
+                        CodigoUsuario = 0,
+                        FechaHora = DateTime.Now,
+                        Navegador = HttpContext.Current.Request.Browser.Browser,
+                        PlataformaDispositivo = Request.Browser.Platform,
+                        FabricanteDispositivo = Request.Browser.MobileDeviceManufacturer,
+                        Vista = "Registro.aspx.cs",
+                        Accion = "btnAceptar_Click"
+                    };
+
+                    Estadistica estadisticaIngresada = await estadisticaManager.Ingresar(estadistica);
 
                 }
                 catch (Exception ex)

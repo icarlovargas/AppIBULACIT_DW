@@ -81,7 +81,7 @@ namespace WebApiSegura.Controllers
                         pago.CodigoCuenta = sqlDataReader.GetInt32(2);
                         pago.CodigoMoneda = sqlDataReader.GetInt32(3);
                         pago.FechaHora = sqlDataReader.GetDateTime(4);
-                        pago.Monto = sqlDataReader.GetInt32(5);
+                        pago.Monto = sqlDataReader.GetDecimal(5);
 
                         pagos.Add(pago);
 
@@ -118,7 +118,7 @@ namespace WebApiSegura.Controllers
 
                     //sqlCommand.Parameters.AddWithValue("@Codigo", pago.Codigo);
                     sqlCommand.Parameters.AddWithValue("@CodigoServicio", pago.CodigoServicio);
-                    sqlCommand.Parameters.AddWithValue("@CodidgoCuenta", pago.CodigoCuenta);
+                    sqlCommand.Parameters.AddWithValue("@CodigoCuenta", pago.CodigoCuenta);
                     sqlCommand.Parameters.AddWithValue("@CodigoMoneda", pago.CodigoMoneda);
                     sqlCommand.Parameters.AddWithValue("@FechaHora", pago.FechaHora);
                     sqlCommand.Parameters.AddWithValue("@Monto", pago.Monto);

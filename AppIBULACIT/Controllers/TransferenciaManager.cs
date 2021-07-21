@@ -10,7 +10,7 @@ using System.Web;
 
 namespace AppIBULACIT.Controllers
 {
-    public class TransferenciaController
+    public class TransferenciaManager
     {
         String UrlBase = "http://localhost:49220/api/Transferencia/";
         HttpClient GetClient(string token)
@@ -33,7 +33,7 @@ namespace AppIBULACIT.Controllers
             return JsonConvert.DeserializeObject<Transferencia>(reponse);
         }
 
-        public async Task<IEnumerable<Transferencia>> ObtenerTransferencias(string token, string codigo)
+        public async Task<IEnumerable<Transferencia>> ObtenerTransferencias(string token)
         {
             HttpClient httpClient = GetClient(token);
 

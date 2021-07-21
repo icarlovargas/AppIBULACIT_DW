@@ -13,8 +13,5 @@ namespace AppIBULACIT.Models
         public int CodigoMoneda { get; set; }
         public System.DateTime FechaHora { get; set; }
         public decimal Monto { get; set; }
-
-        public virtual Cuenta Cuenta { get; set; }
-        public virtual Servicio Servicio { get; set; }
     }
 }

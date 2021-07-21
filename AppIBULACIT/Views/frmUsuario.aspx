@@ -40,7 +40,7 @@
     <!--<input id="myInput" placeholder="Buscar" class="form-control" type="text" />
      Paso 8 -->
 
-    <asp:GridView ID="gvUsuario" runat="server" OnRowCommand="gvUsuario_RowCommand"  AutoGenerateColumns="False"
+    <asp:GridView ID="gvUsuario" runat="server" OnRowCommand="gvUsuario_RowCommand" AutoGenerateColumns="False"
         CssClass="table table-sm" HeaderStyle-CssClass="thead-dark" HeaderStyle-BackColor="#243054"
         HeaderStyle-ForeColor="White" AlternatingRowStyle-BackColor="LightBlue" Width="100%">
         <Columns>
@@ -74,11 +74,12 @@
                 </div>
                 <div class="modal-body">
                     <p>
-                        <asp:Literal ID="ltrModalMensaje" runat="server" /><asp:Label ID="lblCodigoEliminar" runat="server" /></p>
+                        <asp:Literal ID="ltrModalMensaje" runat="server" /><asp:Label ID="lblCodigoEliminar" runat="server" />
+                    </p>
                 </div>
                 <div class="modal-footer">
                     <asp:LinkButton type="button" CssClass="btn btn-success" ID="btnAceptarModal" OnClick="btnAceptarModal_Click" runat="server" Text="<span aria-hidden='true' class='glyphicon glyphicon-ok'></span> Aceptar" />
-                    <asp:LinkButton type="button" CssClass="btn btn-danger" ID="btnCancelarModal" OnClick="btnCancelarModal_Click" runat="server" Text="<span aria-hidden='true' class='glyphicon glyphicon-remove'></span> Cerrar" />
+                    <asp:LinkButton type="button" CssClass="btn btn-danger" ID="btnCancelarModal" CausesValidation="false" OnClick="btnCancelarModal_Click" runat="server" Text="<span aria-hidden='true' class='glyphicon glyphicon-remove'></span> Cerrar" />
                 </div>
             </div>
         </div>
@@ -95,7 +96,7 @@
                         <asp:Literal ID="ltrTituloMantenimiento" runat="server"></asp:Literal></h4>
                 </div>
                 <div class="modal-body">
-                    <table style="width: 100%;">
+                    <table style="width: 100%; border-collapse: separate; border-spacing: 10px">
                         <tr>
                             <td>
                                 <asp:Literal ID="ltrCodigoMant" Text="Codigo" runat="server" /></td>
@@ -108,30 +109,45 @@
                                 <asp:Literal ID="ltrIdentificacion" Text="Identificacion" runat="server" /></td>
                             <td>
                                 <asp:TextBox ID="txtIdentificacion" runat="server" CssClass="form-control" /></td>
+                            <td>
+                                <asp:RequiredFieldValidator ID="rfvIdentificacion" runat="server" ForeColor="Maroon" 
+                                    ErrorMessage="La identificacion es requerida" ControlToValidate="txtIdentificacion"></asp:RequiredFieldValidator></td>
                         </tr>
                         <tr>
                             <td>
                                 <asp:Literal ID="ltrNombre" Text="Nombre" runat="server" /></td>
                             <td>
                                 <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control" /></td>
+                            <td>
+                                <asp:RequiredFieldValidator ID="rfvNombre" runat="server" ForeColor="Maroon"
+                                    ErrorMessage="El nombre es requerido" ControlToValidate="txtNombre"></asp:RequiredFieldValidator></td>
                         </tr>
                         <tr>
                             <td>
                                 <asp:Literal ID="ltrUsername" Text="UserName" runat="server" /></td>
                             <td>
                                 <asp:TextBox ID="txtUsername" runat="server" CssClass="form-control" /></td>
+                            <td>
+                                <asp:RequiredFieldValidator ID="rfvUsername" runat="server" ForeColor="Maroon"
+                                    ErrorMessage="El UserName es requerido" ControlToValidate="txtUsername"></asp:RequiredFieldValidator></td>
                         </tr>
                         <tr>
                             <td>
                                 <asp:Literal ID="ltrPassword" Text="Contraseña" runat="server" /></td>
                             <td>
                                 <asp:TextBox ID="txtPassword" runat="server" CssClass="form-control" /></td>
+                            <td>
+                                <asp:RequiredFieldValidator ID="rfvPassword" runat="server" ForeColor="Maroon"
+                                    ErrorMessage="El Password es Requerido" ControlToValidate="txtPassword"></asp:RequiredFieldValidator></td>
                         </tr>
                         <tr>
                             <td>
                                 <asp:Literal ID="ltremail" Text="Correo" runat="server" /></td>
                             <td>
                                 <asp:TextBox ID="txtemail" runat="server" CssClass="form-control" /></td>
+                            <td>
+                                <asp:RequiredFieldValidator ID="rfvemail" runat="server" ForeColor="Maroon"
+                                    ErrorMessage="El correo es requerido" ControlToValidate="txtemail"></asp:RequiredFieldValidator></td>
                         </tr>
                         <tr>
                             <td>
@@ -140,7 +156,7 @@
                                 <asp:TextBox ID="txtFechaNacimiento" Placeholder="Ingrese su fecha de nacimiento" CssClass="form-control" runat="server"></asp:TextBox>
                             </td>
                             <td>
-                                 <asp:Button ID="btnFechaNac" runat="server" Text="Seleccionar fecha" CausesValidation="false" OnClick="btnFechaNac_Click" />
+                                <asp:Button ID="btnFechaNac" runat="server" Text="Seleccionar fecha" CausesValidation="false" OnClick="btnFechaNac_Click" />
                             </td>
                             <td>
                                 <asp:Calendar ID="cldFechaNacimiento" OnSelectionChanged="cldFechaNacimiento_SelectionChanged" runat="server" Visible="false"></asp:Calendar>
@@ -159,7 +175,7 @@
                 </div>
                 <div class="modal-footer">
                     <asp:LinkButton type="button" CssClass="btn btn-success" ID="btnAceptarMant" OnClick="btnAceptarMant_Click" runat="server" Text="<span aria-hidden='true' class='glyphicon glyphicon-ok'></span> Aceptar" />
-                    <asp:LinkButton type="button" CssClass="btn btn-danger" ID="btnCancelarMant" OnClick="btnCancelarMant_Click" runat="server" Text="<span aria-hidden='true' class='glyphicon glyphicon-remove'></span> Cerrar" />
+                    <asp:LinkButton type="button" CssClass="btn btn-danger" ID="btnCancelarMant" CausesValidation="false" OnClick="btnCancelarMant_Click" runat="server" Text="<span aria-hidden='true' class='glyphicon glyphicon-remove'></span> Cerrar" />
                 </div>
             </div>
         </div>

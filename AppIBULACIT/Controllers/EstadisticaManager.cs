@@ -24,18 +24,18 @@ namespace AppIBULACIT.Controllers
             return httpClient;
         }
 
-        public async Task<Estadistica> ObtenerEstadistica(string token, string codigo)
+        public async Task<Estadistica> ObtenerEstadistica(string codigo)
         {
-            HttpClient httpClient = GetClient(token);
+            HttpClient httpClient = new HttpClient();
 
             var reponse = await httpClient.GetStringAsync(string.Concat(UrlBase, codigo));
 
             return JsonConvert.DeserializeObject<Estadistica>(reponse);
         }
 
-        public async Task<IEnumerable<Estadistica>> ObtenerEstadisticas(string token, string codigo)
+        public async Task<IEnumerable<Estadistica>> ObtenerEstadisticas()
         {
-            HttpClient httpClient = GetClient(token);
+            HttpClient httpClient = new HttpClient();
 
             var reponse = await httpClient.GetStringAsync(string.Concat(UrlBase));
 
@@ -43,36 +43,14 @@ namespace AppIBULACIT.Controllers
         }
 
 
-        public async Task<Estadistica> Ingresar(Estadistica estadistica, string token)
+        public async Task<Estadistica> Ingresar(Estadistica estadistica)
         {
-            HttpClient httpClient = GetClient(token);
+            HttpClient httpClient = new HttpClient();
 
             var reponse = await httpClient.PostAsync(UrlBase,
                 new StringContent(JsonConvert.SerializeObject(estadistica), Encoding.UTF8, "application/json"));
 
             return JsonConvert.DeserializeObject<Estadistica>(await reponse.Content.ReadAsStringAsync());
         }
-
-
-        public async Task<Estadistica> Actualizar(Estadistica estadistica, string token)
-        {
-            HttpClient httpClient = GetClient(token);
-
-            var reponse = await httpClient.PutAsync(UrlBase,
-                new StringContent(JsonConvert.SerializeObject(estadistica), Encoding.UTF8, "application/json"));
-
-            return JsonConvert.DeserializeObject<Estadistica>(await reponse.Content.ReadAsStringAsync());
-        }
-
-        public async Task<string> Actualizar(string id, string token)
-        {
-            HttpClient httpClient = GetClient(token);
-
-            var reponse = await httpClient.DeleteAsync(string.Concat(UrlBase, id));
-
-            return JsonConvert.DeserializeObject<string>(await reponse.Content.ReadAsStringAsync());
-        }
-
-
     }
 }

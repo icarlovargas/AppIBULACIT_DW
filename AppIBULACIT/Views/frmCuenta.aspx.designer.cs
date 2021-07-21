@@ -123,6 +123,15 @@ namespace AppIBULACIT.Views
         protected global::System.Web.UI.WebControls.TextBox txtCodigoUsuarioMan;
 
         /// <summary>
+        /// Control rfvCodigoUsuarioMan.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvCodigoUsuarioMan;
+
+        /// <summary>
         /// Control ltrDescripcion.
         /// </summary>
         /// <remarks>
@@ -139,6 +148,15 @@ namespace AppIBULACIT.Views
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDescripcion;
+
+        /// <summary>
+        /// Control rfvDescripcion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvDescripcion;
 
         /// <summary>
         /// Control ltrIBAN.
@@ -159,6 +177,15 @@ namespace AppIBULACIT.Views
         protected global::System.Web.UI.WebControls.TextBox txtIBAN;
 
         /// <summary>
+        /// Control rfvIBAN.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvIBAN;
+
+        /// <summary>
         /// Control ltrCodigoMonedaMan.
         /// </summary>
         /// <remarks>
@@ -168,13 +195,13 @@ namespace AppIBULACIT.Views
         protected global::System.Web.UI.WebControls.Literal ltrCodigoMonedaMan;
 
         /// <summary>
-        /// Control txtCodigoMonedaMan.
+        /// Control ddMonedas.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCodigoMonedaMan;
+        protected global::System.Web.UI.WebControls.DropDownList ddMonedas;
 
         /// <summary>
         /// Control ltrSaldo.
@@ -193,6 +220,15 @@ namespace AppIBULACIT.Views
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtSaldo;
+
+        /// <summary>
+        /// Control rfvSaldo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvSaldo;
 
         /// <summary>
         /// Control ddlEstadoMant.

@@ -14,7 +14,7 @@ namespace AppIBULACIT.Controllers
     {
         string UrlAuthenthicate = "http://localhost:49220/api/login/authenticate/";
         string UrlRegister = "http://localhost:49220/api/login/register";
-        private Encoding encoding;
+        //private Encoding encoding;
 
         public async Task<Usuario> Autenticar(LoginRequest loginRequest)
         {

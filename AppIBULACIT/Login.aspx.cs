@@ -58,6 +58,20 @@ namespace AppIBULACIT
 
                         Sesion sesionIngresada = await sesionManager.Ingresar(sesion, usuario.Token);
 
+                        EstadisticaController estadisticaManager = new EstadisticaController();
+                        Estadistica estadistica = new Estadistica()
+                        {
+                            CodigoUsuario = usuario.Codigo,
+                            FechaHora = DateTime.Now,
+                            Navegador = HttpContext.Current.Request.Browser.Browser,
+                            PlataformaDispositivo =  Request.Browser.Platform,
+                            FabricanteDispositivo = Request.Browser.MobileDeviceManufacturer,
+                            Vista = "Login.aspx.cs",
+                            Accion = "btnAceptar_Click"
+                        };
+
+                        Estadistica estadisticaIngresada = await estadisticaManager.Ingresar(estadistica);
+
                     }
                     else
                     {

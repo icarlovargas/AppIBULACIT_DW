@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Async="true" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="frmMoneda.aspx.cs" Inherits="AppIBULACIT.Views.frmMoneda" %>
+﻿<%@ Page Title="" Async="true" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="frmTransferencia.aspx.cs" Inherits="AppIBULACIT.Views.frmTransferencia" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -31,55 +31,35 @@
     </script>
     <!--Paso 7 Agregamos el script -->
 
-    <h1>
-        <asp:Label Text="Informacion de Monedas" runat="server"></asp:Label></h1>
-    <!--Paso 1 cambiamos el titulo-->
 
+
+
+    <h1>
+        <asp:Label Text="Lista de Transferencias" runat="server"></asp:Label></h1>
     <input id="myInput" placeholder="Buscar" class="form-control" type="text" />
-    <!-- Paso 8 -->
     <br />
-    <asp:GridView ID="gvMoneda" runat="server" OnRowCommand="gvMoneda_RowCommand" AutoGenerateColumns="False"
+    <asp:GridView ID="gvTransferencia" runat="server" AutoGenerateColumns="False"
         CssClass="table table-sm" HeaderStyle-CssClass="thead-dark" HeaderStyle-BackColor="#243054"
         HeaderStyle-ForeColor="White" AlternatingRowStyle-BackColor="LightBlue" Width="100%">
         <Columns>
             <asp:BoundField HeaderText="Codigo" DataField="Codigo" />
+            <asp:BoundField HeaderText="Cuenta Origen" DataField="CuentaOrigen" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Left" />
+            <asp:BoundField HeaderText="Cuenta Destino" DataField="CuentaDestino" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Left" />
+            <asp:BoundField HeaderText="Fecha" DataField="FechaHora" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Left" />
             <asp:BoundField HeaderText="Descripcion" DataField="Descripcion" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Left" />
             <asp:BoundField HeaderText="Estado" DataField="Estado" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Left" />
-            <asp:ButtonField HeaderText="Modificar" CommandName="Modificar" ControlStyle-CssClass="btn btn-primary" ButtonType="Button" Text="Modificar" />
-            <asp:ButtonField HeaderText="Eliminar" CommandName="Eliminar" ControlStyle-CssClass="btn btn-danger" ButtonType="Button" Text="Eliminar" />
+            <asp:BoundField HeaderText="Monto" DataField="Monto" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Left" />
+
         </Columns>
     </asp:GridView>
-    <!--Paso 2 agregamos el gridview y modificamos las columnas-->
 
-    <asp:LinkButton type="button" CssClass="btn btn-success" OnClick="btnNuevo_Click" ID="btnNuevo" CausesValidation="false"
+    <br />
+    <asp:LinkButton type="button" CssClass="btn btn-success" ID="btnNuevo" OnClick="btnNuevo_Click" CausesValidation="false"
         runat="server" Text="<span aria-hidden='true' class='glyphicon glyphicon-floppy-disk'></span> Nuevo" />
-    <!-- Paso 3 Agregamos el LinkButton // Paso 9 agregamos la funcion onclick -->
+    <!-- Paso 3 Agregamos el LinkButton  /// Paso 9 creamos el evento onclick -->
     <br />
     <asp:Label ID="lblStatus" ForeColor="Maroon" runat="server" Visible="false" />
     <!-- Paso 4 Agregamos el lblStatus -->
-
-    <!--  Paso 5 Primera VENTANA MODAL  Quitamos el onClick-->
-    <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Mantenimiento de servicios</h4>
-                </div>
-                <div class="modal-body">
-                    <p>
-                        <asp:Literal ID="ltrModalMensaje" runat="server" /><asp:Label ID="lblCodigoEliminar" runat="server" />
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <asp:LinkButton type="button" CssClass="btn btn-success" ID="btnAceptarModal" CausesValidation="false" OnClick="btnAceptarModal_Click" runat="server" Text="<span aria-hidden='true' class='glyphicon glyphicon-ok'></span> Aceptar" />
-                    <!--Paso 12 agregamos el onclick-->
-                    <asp:LinkButton type="button" CssClass="btn btn-danger" ID="btnCancelarModal" CausesValidation="false" OnClick="btnCancelarModal_Click" runat="server" Text="<span aria-hidden='true' class='glyphicon glyphicon-remove'></span> Cerrar" />
-                    <!--Paso 13 agregamos el onclick-->
-                </div>
-            </div>
-        </div>
-    </div>
 
 
     <!-- Paso 6 Segunda VENTANA DE MANTENIMIENTO quitamos el onclick -->
@@ -91,13 +71,46 @@
                     <h4 class="modal-title">
                         <asp:Literal ID="ltrTituloMantenimiento" runat="server"></asp:Literal></h4>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body ">
                     <table style="width: 100%; border-collapse: separate; border-spacing: 10px">
                         <tr>
                             <td>
                                 <asp:Literal ID="ltrCodigoMant" Text="Codigo" runat="server" /></td>
                             <td>
-                                <asp:TextBox ID="txtCodigoMant" runat="server" Enabled="false" CssClass="form-control" /></td>
+                                <asp:TextBox ID="txtCodigoMant" Enabled="false" runat="server" CssClass="form-control" /></td>
+
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <asp:Literal ID="ltrCuentaOrigen" Text="Cuenta Origen" runat="server" /></td>
+                            <td>
+                                <asp:TextBox ID="txtCuentaOrigen" runat="server" CssClass="form-control" /></td>
+                            <td>
+                                <asp:RequiredFieldValidator ID="rfvCuentaOrigen" runat="server" ForeColor="Maroon"
+                                    ErrorMessage="Debe de indicar la Cuenta de Origen" ControlToValidate="txtCuentaOrigen"></asp:RequiredFieldValidator>
+                            </td>
+                        </tr>
+
+
+
+                        <tr>
+                            <td>
+                                <asp:Literal ID="ltrCuentaDestino" Text="Cuenta Destino" runat="server" /></td>
+                            <td>
+                                <asp:TextBox ID="txtCuentaDestino" runat="server" CssClass="form-control" /></td>
+                            <td>
+                                <asp:RequiredFieldValidator ID="rfvCuentaDestino" runat="server" ForeColor="Maroon"
+                                    ErrorMessage="Debe de indicar la cuenta Destino" ControlToValidate="txtCuentaDestino"></asp:RequiredFieldValidator>
+                            </td>
+
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Literal ID="ltrfecha" Text="Fecha" runat="server" /></td>
+                            <td>
+                                <asp:TextBox ID="txtfecha" runat="server" Enabled="false" CssClass="form-control" /></td>
 
                         </tr>
                         <tr>
@@ -107,13 +120,26 @@
                                 <asp:TextBox ID="txtDescripcion" runat="server" CssClass="form-control" /></td>
                             <td>
                                 <asp:RequiredFieldValidator ID="rfvDescripcion" runat="server" ForeColor="Maroon"
-                                    ErrorMessage="La descripcion es necesaria" ControlToValidate="txtDescripcion"></asp:RequiredFieldValidator></td>
+                                    ErrorMessage="La descripcion es requerida" ControlToValidate="txtDescripcion"></asp:RequiredFieldValidator>
+                            </td>
+
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Literal ID="ltrMonto" Text="Monto" runat="server" /></td>
+                            <td>
+                                <asp:TextBox ID="txtMonto" runat="server" CssClass="form-control" /></td>
+                            <td>
+                                <asp:RequiredFieldValidator ID="rfvMonto" runat="server" ForeColor="Maroon"
+                                    ErrorMessage="El monto de requerido" ControlToValidate="txtMonto"></asp:RequiredFieldValidator></td>
+
                         </tr>
                         <tr>
                             <td>
                                 <asp:Literal Text="Estado" runat="server" /></td>
                             <td>
-                                <asp:DropDownList ID="ddlEstadoMant" CssClass="form-control" runat="server">
+                                <asp:DropDownList ID="ddlEstadoMant" Enabled="true" CssClass="form-control" runat="server">
                                     <asp:ListItem Value="A">Activo</asp:ListItem>
                                     <asp:ListItem Value="I">Inactivo</asp:ListItem>
                                 </asp:DropDownList></td>
@@ -123,12 +149,11 @@
                 </div>
                 <div class="modal-footer">
                     <asp:LinkButton type="button" CssClass="btn btn-success" ID="btnAceptarMant" OnClick="btnAceptarMant_Click" runat="server" Text="<span aria-hidden='true' class='glyphicon glyphicon-ok'></span> Aceptar" />
-                    <!-- Paso 10 agregamos el onclick-->
-                    <asp:LinkButton type="button" CssClass="btn btn-danger" ID="btnCancelarMant" CausesValidation="false" OnClick="btnCancelarMant_Click" runat="server" Text="<span aria-hidden='true' class='glyphicon glyphicon-remove'></span> Cerrar" />
-                    <!-- Paso 11 agregamos el onclick-->
+                    <asp:LinkButton type="button" CssClass="btn btn-danger" ID="btnCancelarMant" OnClick="btnCancelarMant_Click" CausesValidation="false" runat="server" Text="<span aria-hidden='true' class='glyphicon glyphicon-remove'></span> Cerrar" />
                 </div>
             </div>
         </div>
     </div>
+
 
 </asp:Content>

@@ -45,7 +45,7 @@
             <asp:ButtonField HeaderText="Eliminar" CommandName="Eliminar" ControlStyle-CssClass="btn btn-danger" ButtonType="Button" Text="Eliminar" />
         </Columns>
     </asp:GridView>
-    <asp:LinkButton type="button" OnClick="btnNuevo_Click" CssClass="btn btn-success" ID="btnNuevo" runat="server" Text="<span aria-hidden='true' class='glyphicon glyphicon-floppy-disk'></span> Nuevo" />
+    <asp:LinkButton type="button" OnClick="btnNuevo_Click" CausesValidation="false" CssClass="btn btn-success" ID="btnNuevo" runat="server" Text="<span aria-hidden='true' class='glyphicon glyphicon-floppy-disk'></span> Nuevo" />
     <br />
     <asp:Label ID="lblStatus" ForeColor="Maroon" runat="server" Visible="false" />
     <!-- VENTANA MODAL -->
@@ -58,11 +58,12 @@
                 </div>
                 <div class="modal-body">
                     <p>
-                        <asp:Literal ID="ltrModalMensaje" runat="server" /><asp:Label ID="lblCodigoEliminar" runat="server" /></p>
+                        <asp:Literal ID="ltrModalMensaje" runat="server" /><asp:Label ID="lblCodigoEliminar" runat="server" />
+                    </p>
                 </div>
                 <div class="modal-footer">
-                    <asp:LinkButton type="button" CssClass="btn btn-success" ID="btnAceptarModal" OnClick="btnAceptarModal_Click" runat="server" Text="<span aria-hidden='true' class='glyphicon glyphicon-ok'></span> Aceptar" />
-                    <asp:LinkButton type="button" CssClass="btn btn-danger" ID="btnCancelarModal" OnClick="btnCancelarModal_Click" runat="server" Text="<span aria-hidden='true' class='glyphicon glyphicon-remove'></span> Cerrar" />
+                    <asp:LinkButton type="button" CssClass="btn btn-success" ID="btnAceptarModal" CausesValidation="false" OnClick="btnAceptarModal_Click" runat="server" Text="<span aria-hidden='true' class='glyphicon glyphicon-ok'></span> Aceptar" />
+                    <asp:LinkButton type="button" CssClass="btn btn-danger" ID="btnCancelarModal" CausesValidation="false" OnClick="btnCancelarModal_Click" runat="server" Text="<span aria-hidden='true' class='glyphicon glyphicon-remove'></span> Cerrar" />
                 </div>
             </div>
         </div>
@@ -77,7 +78,7 @@
                         <asp:Literal ID="ltrTituloMantenimiento" runat="server"></asp:Literal></h4>
                 </div>
                 <div class="modal-body">
-                    <table style="width: 100%;">
+                    <table style="width: 100%; border-collapse: separate; border-spacing: 10px">
                         <tr>
                             <td>
                                 <asp:Literal ID="ltrCodigoMant" Text="Codigo" runat="server" /></td>
@@ -89,6 +90,9 @@
                                 <asp:Literal ID="ltrDescripcion" Text="Descripcion" runat="server" /></td>
                             <td>
                                 <asp:TextBox ID="txtDescripcion" runat="server" CssClass="form-control" /></td>
+                            <td>
+                                <asp:RequiredFieldValidator ID="rfvDescripcion" runat="server" ForeColor="Maroon"
+                                    ErrorMessage="La descripcion es requerida" ControlToValidate="txtDescripcion"></asp:RequiredFieldValidator></td>
                         </tr>
                         <tr>
                             <td>
@@ -104,7 +108,8 @@
                 </div>
                 <div class="modal-footer">
                     <asp:LinkButton type="button" CssClass="btn btn-success" ID="btnAceptarMant" OnClick="btnAceptarMant_Click" runat="server" Text="<span aria-hidden='true' class='glyphicon glyphicon-ok'></span> Aceptar" />
-                    <asp:LinkButton type="button" CssClass="btn btn-danger" ID="btnCancelarMant" OnClick="btnCancelarMant_Click" runat="server" Text="<span aria-hidden='true' class='glyphicon glyphicon-remove'></span> Cerrar" />
+                    <asp:LinkButton type="button" CssClass="btn btn-danger" ID="btnCancelarMant" CausesValidation="false"
+                        OnClick="btnCancelarMant_Click" runat="server" Text="<span aria-hidden='true' class='glyphicon glyphicon-remove'></span> Cerrar" />
                 </div>
             </div>
         </div>

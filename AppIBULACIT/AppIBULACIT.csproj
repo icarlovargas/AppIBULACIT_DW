@@ -203,9 +203,12 @@
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Views\frmCuenta.aspx" />
     <Content Include="Views\frmError.aspx" />
+    <Content Include="Views\frmEstadistica.aspx" />
     <Content Include="Views\frmMoneda.aspx" />
+    <Content Include="Views\frmPago.aspx" />
     <Content Include="Views\frmServicio.aspx" />
     <Content Include="Views\frmSesion.aspx" />
+    <Content Include="Views\frmTransferencia.aspx" />
     <Content Include="Views\frmUsuario.aspx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
@@ -317,12 +320,26 @@
     <Compile Include="Views\frmError.aspx.designer.cs">
       <DependentUpon>frmError.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\frmEstadistica.aspx.cs">
+      <DependentUpon>frmEstadistica.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\frmEstadistica.aspx.designer.cs">
+      <DependentUpon>frmEstadistica.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\frmMoneda.aspx.cs">
       <DependentUpon>frmMoneda.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Views\frmMoneda.aspx.designer.cs">
       <DependentUpon>frmMoneda.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmPago.aspx.cs">
+      <DependentUpon>frmPago.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\frmPago.aspx.designer.cs">
+      <DependentUpon>frmPago.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\frmServicio.aspx.cs">
       <DependentUpon>frmServicio.aspx</DependentUpon>
@@ -337,6 +354,13 @@
     </Compile>
     <Compile Include="Views\frmSesion.aspx.designer.cs">
       <DependentUpon>frmSesion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmTransferencia.aspx.cs">
+      <DependentUpon>frmTransferencia.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\frmTransferencia.aspx.designer.cs">
+      <DependentUpon>frmTransferencia.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\frmUsuario.aspx.cs">
       <DependentUpon>frmUsuario.aspx</DependentUpon>
