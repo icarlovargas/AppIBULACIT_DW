@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
@@ -26,6 +27,10 @@ namespace AppIBULACIT.Views
 
         IEnumerable<Cuenta> cuentas = new ObservableCollection<Cuenta>();
         CuentaManager cuentaManager = new CuentaManager();
+
+        public string labelsGraficoVistasGlobal = string.Empty;
+        public string dataGraficoVistasGlobal = string.Empty;
+        public string backgroundcolorsGraficoVistasGlobal = string.Empty;
 
 
         protected async void Page_Load(object sender, EventArgs e)
@@ -53,7 +58,21 @@ namespace AppIBULACIT.Views
                 ddCuentas.DataTextField = "IBAN";
                 ddCuentas.DataValueField = "Codigo";
                 ddCuentas.DataBind();
+
+
+                if (Session["CodigoUsuario"] == null)
+                    Response.Redirect("~/Login.aspx");
+                else
+                {
+                    pagos = await PagoManager.ObtenerPagos(Session["Token"].ToString());
+                    InicializarControles();
+                    ObtenerDatosGraficoDias();
+                    
+                }
+
+
             }
+            
         }
 
 
@@ -248,6 +267,36 @@ namespace AppIBULACIT.Views
             Cuenta cuenta = await cuentaManager.ObtenerCuenta(Session["Token"].ToString(), id);
             cuenta.Saldo = cuenta.Saldo - Convert.ToDecimal(txtMonto.Text);
             Cuenta cuentaModificada = await cuentaManager.Actualizar(cuenta, Session["Token"].ToString());
+        }
+
+
+        private void ObtenerDatosGraficoDias()
+        {
+            StringBuilder script = new StringBuilder();
+            StringBuilder labelsGraficoVistas = new StringBuilder();
+            StringBuilder backgroundcolorsGraficoVistas = new StringBuilder();
+            StringBuilder dataGraficoVistas = new StringBuilder();
+
+            var random = new Random();
+
+            foreach (var pago in pagos.GroupBy(info => info.CodigoServicio).
+
+                Select(group => new
+                {
+                    Servicio = group.Key,
+                    Cantidad = group.Count()
+
+                }).OrderBy(x => x.Servicio))
+            {
+                string color = string.Format("#{0:X6}", random.Next(0x1000000));
+                labelsGraficoVistas.Append(string.Format("'{0}',", pago.Servicio));
+                dataGraficoVistas.Append(string.Format("'{0}',", pago.Cantidad));
+                backgroundcolorsGraficoVistas.Append(string.Format("'{0}',", color));
+
+                labelsGraficoVistasGlobal = labelsGraficoVistas.ToString().Substring(0, labelsGraficoVistas.Length - 1);
+                dataGraficoVistasGlobal = dataGraficoVistas.ToString().Substring(0, dataGraficoVistas.Length - 1);
+                backgroundcolorsGraficoVistasGlobal = backgroundcolorsGraficoVistas.ToString().Substring(0, backgroundcolorsGraficoVistas.Length - 1);
+            }
         }
     }
 }

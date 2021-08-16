@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
@@ -22,11 +23,25 @@ namespace AppIBULACIT.Views
         IEnumerable<Transferencia> transferencias = new ObservableCollection<Transferencia>();
         TransferenciaManager transferenciaManager = new TransferenciaManager();
 
+        public string labelsGraficoVistasGlobal = string.Empty;
+        public string dataGraficoVistasGlobal = string.Empty;
+        public string backgroundcolorsGraficoVistasGlobal = string.Empty;
 
 
-        protected void Page_Load(object sender, EventArgs e)
+        protected async void Page_Load(object sender, EventArgs e)
         {
-            InicializarControles();
+            if (!IsPostBack)
+            {
+                if (Session["CodigoUsuario"] == null)
+                    Response.Redirect("~/Login.aspx");
+                else
+                {
+                    transferencias = await transferenciaManager.ObtenerTransferencias(Session["Token"].ToString());
+                    InicializarControles();
+                    ObtenerDatosGraficoDias();
+
+                }
+            }
 
 
         }
@@ -258,6 +273,36 @@ namespace AppIBULACIT.Views
             else
             {
                 return false;
+            }
+        }
+
+
+        private void ObtenerDatosGraficoDias()
+        {
+            StringBuilder script = new StringBuilder();
+            StringBuilder labelsGraficoVistas = new StringBuilder();
+            StringBuilder backgroundcolorsGraficoVistas = new StringBuilder();
+            StringBuilder dataGraficoVistas = new StringBuilder();
+
+            var random = new Random();
+
+            foreach (var transferencias in transferencias.GroupBy(info => info.FechaHora.ToString("MM/dd/yyyy")).
+
+                Select(group => new
+                {
+                    Fecha = group.Key,
+                    Cantidad = group.Count()
+
+                }).OrderBy(x => x.Fecha))
+            {
+                string color = string.Format("#{0:X6}", random.Next(0x1000000));
+                labelsGraficoVistas.Append(string.Format("'{0}',", transferencias.Fecha));
+                dataGraficoVistas.Append(string.Format("'{0}',", transferencias.Cantidad));
+                backgroundcolorsGraficoVistas.Append(string.Format("'{0}',", color));
+
+                labelsGraficoVistasGlobal = labelsGraficoVistas.ToString().Substring(0, labelsGraficoVistas.Length - 1);
+                dataGraficoVistasGlobal = dataGraficoVistas.ToString().Substring(0, dataGraficoVistas.Length - 1);
+                backgroundcolorsGraficoVistasGlobal = backgroundcolorsGraficoVistas.ToString().Substring(0, backgroundcolorsGraficoVistas.Length - 1);
             }
         }
 
